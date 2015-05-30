@@ -29,7 +29,9 @@ namespace ConsoleApplication4
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StartScreen.Visible = false;
+            //StartScreen.Visible = false;
+            Maze maze = new Maze();
+            maze.Show();
         }
 
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
