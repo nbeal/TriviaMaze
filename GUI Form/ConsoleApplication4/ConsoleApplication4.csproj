@@ -49,6 +49,18 @@
     <Compile Include="AboutUs.Designer.cs">
       <DependentUpon>AboutUs.cs</DependentUpon>
     </Compile>
+    <Compile Include="easyMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="easyMap.Designer.cs">
+      <DependentUpon>easyMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="normalMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="normalMap.Designer.cs">
+      <DependentUpon>normalMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Save.cs" />
     <Compile Include="Game.cs">
       <SubType>Form</SubType>
@@ -57,12 +69,6 @@
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
-    <Compile Include="Map.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Map.Designer.cs">
-      <DependentUpon>Map.cs</DependentUpon>
-    </Compile>
     <Compile Include="Maze.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,14 +93,17 @@
     <EmbeddedResource Include="AboutUs.resx">
       <DependentUpon>AboutUs.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="easyMap.resx">
+      <DependentUpon>easyMap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Game.resx">
       <DependentUpon>Game.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Map.resx">
-      <DependentUpon>Map.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Maze.resx">
       <DependentUpon>Maze.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="normalMap.resx">
+      <DependentUpon>normalMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

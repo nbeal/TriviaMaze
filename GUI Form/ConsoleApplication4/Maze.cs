@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,11 +13,13 @@ using System.Xml.Serialization;
 
 namespace ConsoleApplication4
 {
+
     public partial class Maze : Form
     {
         private static Room[] rooms;
         private int roomID = 1, loaded, difficulty = 2;
         private static Save save;
+        private Boolean won = false;
 
         public Maze(int passedLoaded, Save passedSave, int passedDifficulty)
         {
@@ -24,7 +27,8 @@ namespace ConsoleApplication4
             loaded = passedLoaded;
             save = passedSave;
             difficulty = passedDifficulty;
-            InitVars();           
+            InitVars();
+
         }
 
         private void InitVars()
@@ -49,6 +53,22 @@ namespace ConsoleApplication4
                 roomID = save.roomID;
             }
             checkDoors();
+        }
+
+        private void checkWin()
+        {
+            won = true;
+            if (MessageBox.Show("Congratulations, you win! Would you like to play again?", "Congrats!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                ProcessStartInfo Info = new ProcessStartInfo();
+                Info.Arguments = "/C ping 127.0.0.1 -n 2 && \"" + Application.ExecutablePath + "\"";
+                Info.WindowStyle = ProcessWindowStyle.Hidden;
+                Info.CreateNoWindow = true;
+                Info.FileName = "cmd.exe";
+                Process.Start(Info);
+                Application.Exit();
+            }
+            Environment.Exit(0);
         }
 
         #region get/set
@@ -82,8 +102,18 @@ namespace ConsoleApplication4
 
         private void mapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Map map = new Map(roomID);
-            map.Show();
+            if(difficulty == 1)
+            {
+                easyMap easy = new easyMap(roomID);
+                easy.Show();
+            }
+            else if (difficulty == 2)
+            {
+                normalMap normal = new normalMap(roomID);
+                normal.Show();
+            }
+            else
+                MessageBox.Show("No Map for hard mode! That'd be too easy!");
         }
 
         #region Image Checks
@@ -184,13 +214,19 @@ namespace ConsoleApplication4
 
         private void EastDoor_Click(object sender, EventArgs e)
         {
+            
             if (rooms[roomID-1].getEast() != 0)
             {
                  //QUESTION DIALOG <<<<<<<<<<<<<<<<<<<<<<<<-------------------------------------------------------------HERE!
                  roomID = rooms[roomID-1].getEastID();
                  MessageBox.Show("" + roomID);
                  checkDoors();
+                 if (roomID == (rooms.Length))
+                 {
+                     checkWin();
+                 }
             }
+            
         }
 
         private void SouthDoor_Click(object sender, EventArgs e)
@@ -201,7 +237,12 @@ namespace ConsoleApplication4
                 roomID = rooms[roomID-1].getSouthID();
                 MessageBox.Show("" + roomID);
                 checkDoors();
+                if (roomID == (rooms.Length))
+                {
+                    checkWin();
+                }
             }
+            
         }
 
         private void NorthDoor_Click(object sender, EventArgs e)
@@ -212,7 +253,12 @@ namespace ConsoleApplication4
                 roomID = rooms[roomID-1].getNorthID();
                 MessageBox.Show("" + roomID);
                 checkDoors();
+                if (roomID == (rooms.Length))
+                {
+                    checkWin();
+                }
             }
+            
         }
 
         private void WestDoor_Click(object sender, EventArgs e)
@@ -223,7 +269,12 @@ namespace ConsoleApplication4
                 roomID = rooms[roomID-1].getWestID();
                 MessageBox.Show("" + roomID);
                 checkDoors();
+                if (roomID == (rooms.Length))
+                {
+                    checkWin();
+                }
             }
+            
         }
 
         private void DungeonMap_Click(object sender, EventArgs e)
@@ -261,14 +312,17 @@ namespace ConsoleApplication4
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnFormClosing(e);
-            if (MessageBox.Show("Do you want to save changes your game before closing?", "Save Game", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (!won)
             {
-                e.Cancel = true;
-                saveGame();
+                base.OnFormClosing(e);
+                if (MessageBox.Show("Do you want to save changes your game before closing?", "Save Game", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                    saveGame();
+                    Environment.Exit(0);
+                }
                 Environment.Exit(0);
             }
-            Environment.Exit(0);
         }
     }
 }

@@ -144,17 +144,7 @@
             this.WestLabel.TabIndex = 4;
             this.WestLabel.Text = "West";
             this.WestLabel.Click += new System.EventHandler(this.WestLabel_Click);
-            // 
-            // DungeonMap5
-            // 
-            this.DungeonMap5.Image = ((System.Drawing.Image)(resources.GetObject("DungeonMap5.Image")));
-            this.DungeonMap5.Location = new System.Drawing.Point(180, 181);
-            this.DungeonMap5.Name = "DungeonMap5";
-            this.DungeonMap5.Size = new System.Drawing.Size(370, 317);
-            this.DungeonMap5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.DungeonMap5.TabIndex = 5;
-            this.DungeonMap5.TabStop = false;
-            this.DungeonMap5.Click += new System.EventHandler(this.DungeonMap_Click);
+            
             // 
             // WestDoor
             // 
@@ -239,6 +229,16 @@
             this.DungeonMap4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.DungeonMap4.TabIndex = 13;
             this.DungeonMap4.TabStop = false;
+            // 
+            // DungeonMap5
+            // 
+            this.DungeonMap5.Image = ((System.Drawing.Image)(resources.GetObject("DungeonMap5.Image")));
+            this.DungeonMap5.Location = new System.Drawing.Point(180, 181);
+            this.DungeonMap5.Name = "DungeonMap5";
+            this.DungeonMap5.Size = new System.Drawing.Size(370, 317);
+            this.DungeonMap5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.DungeonMap5.TabIndex = 5;
+            this.DungeonMap5.TabStop = false;
             // 
             // DungeonMap6
             // 

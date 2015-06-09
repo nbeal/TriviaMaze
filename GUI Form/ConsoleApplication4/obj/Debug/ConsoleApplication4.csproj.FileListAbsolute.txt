@@ -16,7 +16,8 @@ C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplica
 C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.csprojResolveAssemblyReference.cache
 C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.AboutUs.resources
 C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.TriviaMaze.resources
-C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.Maze.resources
 C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.Properties.Resources.resources
 C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.csproj.GenerateResource.Cache
-C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.Map.resources
+C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.easyMap.resources
+C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.normalMap.resources
+C:\Users\Sapphire\Documents\GitHub\TriviaMaze\TriviaMaze\GUI Form\ConsoleApplication4\obj\Debug\ConsoleApplication4.Maze.resources
