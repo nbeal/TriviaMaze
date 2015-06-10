@@ -1,54 +1,72 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Data;
+using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Data;
+using System.IO;
 
-namespace TriviaMaze
+namespace ConsoleApplication4
 {
-      class DataClass
-      {
-        private SQLiteConnection sqlite;
+    public class Door
+    {
+        public string Question { get; set; }
+        public string FA1 { get; set; }
+        public string FA2 { get; set; }
+        public string FA3 { get; set; }
+        public string Answer { get; set; }
+        public string qId { get; set; }
+        public bool Unlocked { get; set; }
+        public bool Locked { get; set; }
 
-        public DataClass()
+
+      
+
+        public Door CreateDoor()
         {
-              //This part killed me in the beginning.  I was specifying "DataSource"
-              //instead of "Data Source"
-              sqlite = new SQLiteConnection("Data Source=/bin/Debug/MazeQA2.db");
+            Door newDoor = new Door();
 
+            using (SQLiteConnection myConnection = new SQLiteConnection("data source=MazeQA2.db"))
+            {
+                string query = "SELECT * FROM MazeQA WHERE Used=0";
+                SQLiteCommand cmd = new SQLiteCommand(query, myConnection);
+                
+                myConnection.Open();
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        newDoor.Question = reader["Question"].ToString();
+                        newDoor.FA1 = reader["FA1"].ToString();
+                        newDoor.FA2 = reader["FA2"].ToString();
+                        newDoor.FA3 = reader["FA3"].ToString();
+                        newDoor.Answer = reader["Answer"].ToString();
+                        newDoor.qId = reader["ID"].ToString();
+                    }
+                    Update(newDoor.qId);
+                    myConnection.Close();
+                }
+            }
+            newDoor.Unlocked = true;
+            newDoor.Locked = true;
+            
+            return newDoor;
         }
 
-        public DataTable selectQuery(string query)
+        public void Update(string qId)
         {
-              SQLiteDataAdapter ad;
-              DataTable dt = new DataTable();
+            using (SQLiteConnection myConnection = new SQLiteConnection("data source=MazeQA2.db"))
+            {
+                int id = int.Parse(qId);
+                string update = "UPDATE MazeQA SET Used=1 WHERE ID=@id";
+                SQLiteCommand updateCmd = new SQLiteCommand(update, myConnection);
 
-              try
-              {
-                    SQLiteCommand cmd;
-                    sqlite.Open();  //Initiate connection to the db
-                    cmd = sqlite.CreateCommand();
-                    cmd.CommandText = query;  //set the passed query
-                    ad = new SQLiteDataAdapter(cmd);
-                    ad.Fill(dt); //fill the datasource
-              }
-              catch(SQLiteException ex)
-              {
-                    //Add your exception code here.
-              }
-              sqlite.Close();
-              return dt;
-  }
-}
-public class Door
-{
-    public string Question { get; set; }
-    public string Answer { get; set; }
-    public bool Unlocked { get; set; }
-
-	public Door(string question, string answer, bool unlocked)
-	{
-        Question = question;
-        Answer = answer;
-        Unlocked = unlocked;
-	}
+                myConnection.Open();
+                updateCmd.ExecuteNonQuery();
+                myConnection.Close();
+                
+            }
+        }
+    }
 }
