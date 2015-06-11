@@ -24,6 +24,7 @@ namespace ConsoleApplication4
         private int roomID = 1, loaded, difficulty = 2;
         private static Save save;
         private Boolean won = false;
+        private int lockCounter = 0;
 
         public Maze(int passedLoaded, Save passedSave, int passedDifficulty)
         {
@@ -38,24 +39,24 @@ namespace ConsoleApplication4
         {
             Scan scan = new Scan();
 
-            if (loaded == 1)
+            if (loaded == 1) //if loading has been requested
             {
                 difficulty = save.difficulty;
                 roomID = save.roomID;
                 rooms = save.rooms;
             }
-            else
+            else //else load new game
             {
                 switch (difficulty)
                 {
                     case 1:
-                        rooms = scan.scanIn("easy.txt");
+                        rooms = scan.scanIn("easy.txt"); //2x2
                         break;
                     case 2:
-                        rooms = scan.scanIn("normal.txt");
+                        rooms = scan.scanIn("normal.txt");//3x3
                         break;
                     case 3:
-                        rooms = scan.scanIn("hard.txt");
+                        rooms = scan.scanIn("hard.txt");//4x4
                         break;
                 }
             }
@@ -90,6 +91,7 @@ namespace ConsoleApplication4
 
         #region Map
 
+        //Opens Map object depending on difficulty
         private void mapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(difficulty == 1)
@@ -110,10 +112,35 @@ namespace ConsoleApplication4
 
         #region Room Checks
 
+        private void checkGameOver()
+        {
+            //if both doors leading to winning room are locked
+            if (rooms[rooms.Length-1].getNorthDoor().Locked == true && rooms[rooms.Length-1].getWestDoor().Locked == true)
+                cueGameOver();
+            //If both doors in starter room get locked
+            if (rooms[0].getSouthDoor().Locked == true && rooms[0].getEastDoor().Locked == true)
+                cueGameOver();
+
+            //if continue to try to open door without changing room, assumes you lost
+            if (lockCounter == 5)
+                cueGameOver();
+           
+        }
+
+        private void cueGameOver()
+        {
+            if (MessageBox.Show("There is no possible ways for you to advance to the end of the maze... Would you like to try again?", "GAME OVER", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                makeNewGame();
+            }
+            Environment.Exit(0);
+        }
+
         private void checkDoors()  //Checks if there is valid door choices in room
         {
             int north, south, east, west;
 
+            
 
             if (rooms[roomID - 1].getEast() == 0)
             {
@@ -201,6 +228,7 @@ namespace ConsoleApplication4
                 DungeonMap9.Visible = true;
         }
 
+        //Did the player reach the last room?
         private void checkWin()
         {
             using (var soundPlayer = new SoundPlayer("./Ta Da.wav"))
@@ -219,27 +247,36 @@ namespace ConsoleApplication4
 
         #region Door Buttons
 
+        //Checks door circumstances and if needed gets a question
         private Boolean getQuestion(Door door)
         {
+            checkGameOver();
             answer = false;
             if (door.Unlocked)
+            {
+                lockCounter--;
                 return true;
+            }
             else if (door.Locked)
+            {
+                lockCounter++;
                 MessageBox.Show("This is door is locked!");
+            }
             else
             {
                 Question question = new Question(door, this);
                 question.Show();//create question gui
                 if (answer == true)
                 {
+                    lockCounter = 0;
                     return true;
 
                 }
                 else
                 {
                     return false;
-                }
 
+                }
             }
             return false;
         }
@@ -249,10 +286,10 @@ namespace ConsoleApplication4
             
             if (rooms[roomID-1].getEast() != 0)
             {
-                if (getQuestion(rooms[roomID - 1].getEastDoor()))
+                if (getQuestion(rooms[roomID - 1].getEastDoor())) //If question answer correctly or unlocked
                 {
-                    roomID = rooms[roomID - 1].getEastID();
-                    rooms[roomID - 1].getWestDoor().Unlocked = true;
+                    roomID = rooms[roomID - 1].getEastID(); //get next room over
+                    rooms[roomID - 1].getWestDoor().Unlocked = true; //set return trip to be unlocked also
                     //MessageBox.Show("" + roomID);//debug
                     checkDoors();
                     if (roomID == (rooms.Length))
@@ -262,10 +299,11 @@ namespace ConsoleApplication4
                 }
                 else//Locks door from otherside
                 {
+                    checkGameOver();
                     int tempID = rooms[roomID - 1].getEastID();
                     rooms[tempID - 1].getWestDoor().Locked = true;
-                }
 
+                }
             }           
         }
 
@@ -286,6 +324,7 @@ namespace ConsoleApplication4
                 }
                 else//Locks door from otherside
                 {
+                    checkGameOver();
                     int tempID = rooms[roomID - 1].getSouthID();
                     rooms[tempID - 1].getNorthDoor().Locked = true;
                 }
@@ -310,6 +349,7 @@ namespace ConsoleApplication4
                 }
                 else //Locks door from otherside
                 {
+                    checkGameOver();
                     int tempID = rooms[roomID - 1].getNorthID();
                     rooms[tempID - 1].getSouthDoor().Locked = true;
                 }
@@ -333,9 +373,11 @@ namespace ConsoleApplication4
                 }
                 else//Locks door from otherside
                 {
+                    checkGameOver();
                     int tempID = rooms[roomID - 1].getWestID();
                     rooms[tempID-1].getEastDoor().Locked = true;
                 }
+                
             }        
         }
 
@@ -348,6 +390,7 @@ namespace ConsoleApplication4
             saveGame();
         }
 
+        //Sends data to be saved
         private void saveGame()
         {
             save = new Save();
@@ -363,6 +406,7 @@ namespace ConsoleApplication4
 
         #region Closing
 
+        //Opens unseen CMD window to create another Game instance and closes this instance
         private void makeNewGame()
         {
             ProcessStartInfo Info = new ProcessStartInfo();
@@ -374,6 +418,7 @@ namespace ConsoleApplication4
             Application.Exit();
         }
 
+        
         private void endGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Do you want to save changes your game before closing?", "Save Game", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -383,6 +428,7 @@ namespace ConsoleApplication4
             Environment.Exit(0);
         }
 
+        //Checks if they would like to save before quitting
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if (!won)

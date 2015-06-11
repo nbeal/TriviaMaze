@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication4
 {
+
+    //This Class holds the data and is sent to the BinarySerialization Class to be saved.
     [Serializable]
     public class Save
     {

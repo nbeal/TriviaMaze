@@ -9,9 +9,7 @@ namespace ConsoleApplication4
 {
     public class Scan
     {
-
-        //private string difficulty = "easy.txt";
-
+        //Scans in text document depending on difficulty chosen
         public Room[] scanIn(string difficulty)
         {
             string line, stats = "";
@@ -47,6 +45,7 @@ namespace ConsoleApplication4
 
         }
 
+        //Converts data to Room Object
         private Room[] convertFile(string stats, string[] rawData)
         {
             int size = Convert.ToInt32(stats);

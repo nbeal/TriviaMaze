@@ -30,6 +30,7 @@ namespace ConsoleApplication4
             loaded = 0;
         }
 
+        //Sets all question to be "unused" for start of program
         private void resetSQL()
         {
             try

@@ -23,6 +23,7 @@ namespace ConsoleApplication4
             InitializeComponent();
             QuestionField.Text = door.Question;
 
+            //Random placement of questions answer
             Random random = new Random();
             int answer = random.Next(1, 4);
             if (answer == 1)
@@ -54,8 +55,6 @@ namespace ConsoleApplication4
                 answer3.Text = door.FA3;
             }
         }
-
-        
 
         private void answer1_Click(object sender, EventArgs e)
         {
@@ -114,6 +113,7 @@ namespace ConsoleApplication4
             }
         }
 
+        //Sets Variable in Maze to hold true
         private void sendTrue()
         {
             maze.answer = true;
@@ -121,6 +121,7 @@ namespace ConsoleApplication4
             this.Close();
         }
 
+        //Sets Variable in Maze to hold false
         private void sendFalse()
         {
             maze.answer = false;

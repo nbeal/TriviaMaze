@@ -4,6 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*
+ *Team //noComment
+ *Nathan Beal & Nathan Owens
+ *Software Eng. Final
+ *Trivia Maze
+*/
+
 namespace ConsoleApplication4
 {
     static class Tester

@@ -23,7 +23,7 @@ namespace ConsoleApplication4
         public bool Unlocked { get; set; }
         public bool Locked { get; set; }
 
-
+        //Initial Connection to Database
         public Door()
         {
             int count = getCount();
@@ -50,14 +50,17 @@ namespace ConsoleApplication4
                     }
                     Update(qId);
                     myConnection.Close();
-                    if (Question == null)
-                        retryQuestion();
+                    //if (Question == null)
+                        //retryQuestion();
                 }
             }
             Unlocked = false;
             Locked = false;
         }
 
+        //Attempt to make question grabbing at random, but due to the way it was built would sometimes grab blank questions.
+        //Would have liked to finish this portion.
+        /*
         private void retryQuestion()
         {
             using (SQLiteConnection myConnection = new SQLiteConnection("Data Source=./MazeQA2.db"))
@@ -88,8 +91,9 @@ namespace ConsoleApplication4
             }
             Unlocked = false;
             Locked = false;
-        }
+        }*/
 
+        //Updates what questions have been used already
         private void Update(string qId)
         {
             try
@@ -111,6 +115,7 @@ namespace ConsoleApplication4
             }
         }
 
+        //Gets count of how many lines in DB
         private int getCount()
         {
             int count;

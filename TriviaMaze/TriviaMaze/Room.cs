@@ -26,6 +26,7 @@ namespace ConsoleApplication4
             this.ID = Convert.ToInt32(passed);
         }
 
+        //Sets Strings from text to integers and creates Doors if valid exits occur
         public void setExits(String passed)
         {
             //north west south east
