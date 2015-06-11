@@ -14,14 +14,14 @@ using System.Xml.Serialization;
 namespace ConsoleApplication4
 {
     
-    public partial class ConsoleApplication4 : Form
+    public partial class Game : Form
     {
         private Maze maze;
         private Save save;
         private int loaded;
         private int difficulty = 2; //1-easy 2-normal 3-hard
 
-        public ConsoleApplication4()
+        public Game()
         {
             InitializeComponent();
             resetSQL();

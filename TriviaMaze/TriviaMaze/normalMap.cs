@@ -12,7 +12,7 @@ namespace ConsoleApplication4
 {
     public partial class normalMap : Form
     {
-        private int roomID = 0, difficulty;
+        private int roomID = 0;
 
         public normalMap(int ID)
         {

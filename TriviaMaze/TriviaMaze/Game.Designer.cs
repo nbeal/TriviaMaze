@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApplication4
 {
-    partial class ConsoleApplication4
+    partial class Game
     {
         /// <summary>
         /// Required designer variable.
